@@ -26,11 +26,11 @@ func tick(delta: float) -> void:
 	
 	# скорость передвижения
 	if wants_crouch or body.test_move(body.transform, Vector3(0,1.0,0)):
-		current_speed = crouch_speed
+		current_speed = crouch_speed - (crouch_speed / 2) if Input.is_action_pressed("move_down") else crouch_speed
 	elif wants_run:
-		current_speed = run_speed
+		current_speed = run_speed - (run_speed / 2) if Input.is_action_pressed("move_down") else run_speed
 	else:
-		current_speed = walk_speed
+		current_speed = walk_speed - (walk_speed / 2) if Input.is_action_pressed("move_down") else walk_speed
 		
 	# приседание
 	if body.test_move(body.transform, Vector3(0,1.0,0)):
