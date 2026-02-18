@@ -38,9 +38,11 @@ func tick(delta: float) -> void:
 	if wants_crouch:
 		head.position.y = lerp(head.position.y, -0.5, 3.0 * delta)
 		collision.shape.height = lerp(collision.shape.height, original_col_height - 1.0, 3.0 * delta)
+		model.scale.y = lerp(model.scale.y, 0.04, 3.0 * delta)
 	else:
 		head.position.y = lerp(head.position.y, 0.0, 3.0 * delta)
 		collision.shape.height = lerp(collision.shape.height, original_col_height, 3.0 * delta)
+		model.scale.y = lerp(model.scale.y, 0.12, 3.0 * delta)
 		
 	# направление движения
 	if body.is_on_floor():

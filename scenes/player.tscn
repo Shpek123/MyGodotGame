@@ -1,14 +1,41 @@
 [gd_scene format=3 uid="uid://bqqcm6ld8b77v"]
 
 [ext_resource type="Script" uid="uid://7uwto6r6xq6t" path="res://scripts/imput_component.gd" id="1_3vyb7"]
-[ext_resource type="Script" uid="uid://cigta500n2xwu" path="res://scenes/player.gd" id="1_g2els"]
+[ext_resource type="Script" uid="uid://cigta500n2xwu" path="res://scripts/player.gd" id="1_g2els"]
+[ext_resource type="PackedScene" uid="uid://bjt0f2ofhub2x" path="res://models/woman/woman2.glb" id="2_tuyoq"]
 [ext_resource type="Script" uid="uid://b0r4drbbyij12" path="res://scripts/movement_component.gd" id="3_qhqgy"]
 [ext_resource type="Script" uid="uid://dbwnxhk8d3b8h" path="res://scripts/fps_component.gd" id="4_dqkch"]
 [ext_resource type="Script" uid="uid://touk7e7jqv62" path="res://scripts/camera_animator_component.gd" id="5_qlg0r"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_sh265"]
-
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4flbx"]
+
+[sub_resource type="Animation" id="Animation_smehm"]
+resource_name = "CROUCH"
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Pivot/Head/Camera3D:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.05235988, 0, 0), Vector3(-0.08726646, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Pivot/Head/Camera3D:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 0.01), Vector3(0, 0, -0.04), Vector3(0, 0, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_qlg0r"]
 resource_name = "IDLE"
@@ -69,9 +96,9 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_fjrip"]
 resource_name = "WALK"
-length = 2.0
+length = 1.5
 loop_mode = 1
-step = 0.5
+step = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -79,7 +106,7 @@ tracks/0/path = NodePath("../Pivot/Head/Camera3D:rotation")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0.75, 1.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector3(0, 0, -0.0017453292), Vector3(0, 0, 0.0017453292)]
@@ -91,7 +118,7 @@ tracks/1/path = NodePath("../Pivot/Head/Camera3D:position")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0.75, 1.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector3(0.05, 0, 0), Vector3(-0.05, 0, 0)]
@@ -99,6 +126,7 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fjrip"]
 _data = {
+&"CROUCH": SubResource("Animation_smehm"),
 &"IDLE": SubResource("Animation_qlg0r"),
 &"RESET": SubResource("Animation_tuyoq"),
 &"WALK": SubResource("Animation_fjrip")
@@ -106,10 +134,6 @@ _data = {
 
 [node name="Player" type="CharacterBody3D" unique_id=1689810823]
 script = ExtResource("1_g2els")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1361186133]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-mesh = SubResource("CapsuleMesh_sh265")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1550609983]
 physics_interpolation_mode = 2
@@ -126,6 +150,9 @@ physics_interpolation_mode = 2
 [node name="Camera3D" type="Camera3D" parent="Pivot/Head" unique_id=554338431]
 physics_interpolation_mode = 2
 
+[node name="woman2" parent="Pivot" unique_id=1845926170 instance=ExtResource("2_tuyoq")]
+transform = Transform3D(-0.12, 0, 1.8119495e-08, 0, 0.12, 0, -1.8119495e-08, 0, -0.12, 0.318159, -0.79999995, 0.138)
+
 [node name="InputComponent" type="Node" parent="." unique_id=704337594]
 script = ExtResource("1_3vyb7")
 metadata/_custom_type_script = "uid://7uwto6r6xq6t"
@@ -133,7 +160,7 @@ metadata/_custom_type_script = "uid://7uwto6r6xq6t"
 [node name="MovementComponent" type="Node" parent="." unique_id=253361088 node_paths=PackedStringArray("body", "model", "collision", "head")]
 script = ExtResource("3_qhqgy")
 body = NodePath("..")
-model = NodePath("../MeshInstance3D")
+model = NodePath("../Pivot/woman2")
 collision = NodePath("../CollisionShape3D")
 head = NodePath("../Pivot/Head")
 metadata/_custom_type_script = "uid://b0r4drbbyij12"

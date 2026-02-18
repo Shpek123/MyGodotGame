@@ -4,7 +4,10 @@ class_name CameraAnimatorComponent extends Node
 @export var movement_component: MovementComponent
 
 func _ready():
-	if movement_component.direction.length() > 0.1:
-		animation_player.play("WALK")
+	if movement_component.wants_crouch:
+		animation_player.play("CROUCH")
 	else:
-		animation_player.play("IDLE")
+		if movement_component.direction.length() > 0.1:
+			animation_player.play("WALK")
+		else:
+			animation_player.play("IDLE")
