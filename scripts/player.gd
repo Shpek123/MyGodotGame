@@ -18,7 +18,7 @@ func _physics_process(delta: float) -> void:
 	movement_component.wants_jump = input_component.jump_pressed
 	movement_component.tick(delta)
 	
-	camera_animator_component._ready()
+	
 	
 	move_and_slide()
 	

@@ -4,8 +4,8 @@ class_name MovementComponent extends Node
 @export var model: Node3D
 @export var collision: CollisionShape3D
 @export var head: Node3D
-@export var walk_speed := 1.5
-@export var run_speed := 20.0
+@export var walk_speed := 2.0
+@export var run_speed := 4.0
 @export var crouch_speed := 1.0
 @export var jump_velocity := 8.0
 @export var gravity_multiplier := 2.5
@@ -18,6 +18,8 @@ var wants_jump := false
 var wants_run := false
 var wants_crouch := false
 
+var is_crouch: bool
+
 func tick(delta: float) -> void:
 	if body == null:
 		return
@@ -25,7 +27,7 @@ func tick(delta: float) -> void:
 	# ДВИЖЕНИЕ
 	
 	# скорость передвижения
-	if wants_crouch or body.test_move(body.transform, Vector3(0,1.0,0)):
+	if is_crouch:
 		current_speed = crouch_speed - (crouch_speed / 2) if Input.is_action_pressed("move_down") else crouch_speed
 	elif wants_run:
 		current_speed = run_speed - (run_speed / 2) if Input.is_action_pressed("move_down") else run_speed
@@ -33,16 +35,17 @@ func tick(delta: float) -> void:
 		current_speed = walk_speed - (walk_speed / 2) if Input.is_action_pressed("move_down") else walk_speed
 		
 	# приседание
-	if body.test_move(body.transform, Vector3(0,1.0,0)):
-			wants_crouch = true
-	if wants_crouch:
-		head.position.y = lerp(head.position.y, -0.5, 3.0 * delta)
+	if wants_crouch or is_crouch:
+		head.position.y = lerp(head.position.y, -0.2, 3.0 * delta)
 		collision.shape.height = lerp(collision.shape.height, original_col_height - 1.0, 3.0 * delta)
-		model.scale.y = lerp(model.scale.y, 0.04, 3.0 * delta)
+		if body.test_move(body.transform, Vector3(0,1.0,0)) or Input.is_action_pressed("crouch"):
+			is_crouch = true
+		else:
+			is_crouch = false
 	else:
 		head.position.y = lerp(head.position.y, 0.0, 3.0 * delta)
 		collision.shape.height = lerp(collision.shape.height, original_col_height, 3.0 * delta)
-		model.scale.y = lerp(model.scale.y, 0.12, 3.0 * delta)
+
 		
 	# направление движения
 	if body.is_on_floor():

@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://brtr44t45y28l"]
+
+[ext_resource type="Texture2D" uid="uid://d2ydebgoow4wd" path="res://textures/rock_wall/rock_wall_09_diff_1k.jpg" id="1_15pud"]
+[ext_resource type="Texture2D" uid="uid://brcuyu81ni41v" path="res://textures/rock_wall/rock_wall_09_nor_gl_1k.jpg" id="2_tayni"]
+[ext_resource type="Texture2D" uid="uid://dbjuw18ftpwnk" path="res://textures/rock_wall/rock_wall_09_rough_1k.jpg" id="3_bovk1"]
+
+[resource]
+albedo_texture = ExtResource("1_15pud")
+roughness_texture = ExtResource("3_bovk1")
+normal_enabled = true
+normal_scale = 1.21
+normal_texture = ExtResource("2_tayni")
+uv1_scale = Vector3(7.53, 7.53, 7.53)

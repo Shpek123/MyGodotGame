@@ -10,3 +10,4 @@ func update() -> void:
 	jump_pressed = Input.is_action_just_pressed("jump")
 	shift_pressed = Input.is_action_pressed("run")
 	crouch_pressed = Input.is_action_pressed("crouch")
+	

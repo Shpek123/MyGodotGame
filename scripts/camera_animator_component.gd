@@ -1,13 +1,9 @@
 class_name CameraAnimatorComponent extends Node
 
 @export var animation_player: AnimationPlayer
-@export var movement_component: MovementComponent
+@export var movement: MovementComponent
 
-func _ready():
-	if movement_component.wants_crouch:
-		animation_player.play("CROUCH")
-	else:
-		if movement_component.direction.length() > 0.1:
-			animation_player.play("WALK")
-		else:
-			animation_player.play("IDLE")
+enum state { IDLE, WALK, CROUCH }
+
+var current_state: state = state.IDLE
+var was_crouching: bool = false

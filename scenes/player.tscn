@@ -2,12 +2,13 @@
 
 [ext_resource type="Script" uid="uid://7uwto6r6xq6t" path="res://scripts/imput_component.gd" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://cigta500n2xwu" path="res://scripts/player.gd" id="1_g2els"]
-[ext_resource type="PackedScene" uid="uid://bjt0f2ofhub2x" path="res://models/woman/woman2.glb" id="2_tuyoq"]
 [ext_resource type="Script" uid="uid://b0r4drbbyij12" path="res://scripts/movement_component.gd" id="3_qhqgy"]
 [ext_resource type="Script" uid="uid://dbwnxhk8d3b8h" path="res://scripts/fps_component.gd" id="4_dqkch"]
 [ext_resource type="Script" uid="uid://touk7e7jqv62" path="res://scripts/camera_animator_component.gd" id="5_qlg0r"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4flbx"]
+radius = 0.3
+height = 1.7592773
 
 [sub_resource type="Animation" id="Animation_smehm"]
 resource_name = "CROUCH"
@@ -137,12 +138,12 @@ script = ExtResource("1_g2els")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1550609983]
 physics_interpolation_mode = 2
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8796387, 0)
 shape = SubResource("CapsuleShape3D_4flbx")
 
 [node name="Pivot" type="Node3D" parent="." unique_id=513517659]
 physics_interpolation_mode = 2
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, -0.162)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.47, 0)
 
 [node name="Head" type="Node3D" parent="Pivot" unique_id=1657900795]
 physics_interpolation_mode = 2
@@ -150,17 +151,13 @@ physics_interpolation_mode = 2
 [node name="Camera3D" type="Camera3D" parent="Pivot/Head" unique_id=554338431]
 physics_interpolation_mode = 2
 
-[node name="woman2" parent="Pivot" unique_id=1845926170 instance=ExtResource("2_tuyoq")]
-transform = Transform3D(-0.12, 0, 1.8119495e-08, 0, 0.12, 0, -1.8119495e-08, 0, -0.12, 0.318159, -0.79999995, 0.138)
-
 [node name="InputComponent" type="Node" parent="." unique_id=704337594]
 script = ExtResource("1_3vyb7")
 metadata/_custom_type_script = "uid://7uwto6r6xq6t"
 
-[node name="MovementComponent" type="Node" parent="." unique_id=253361088 node_paths=PackedStringArray("body", "model", "collision", "head")]
+[node name="MovementComponent" type="Node" parent="." unique_id=253361088 node_paths=PackedStringArray("body", "collision", "head")]
 script = ExtResource("3_qhqgy")
 body = NodePath("..")
-model = NodePath("../Pivot/woman2")
 collision = NodePath("../CollisionShape3D")
 head = NodePath("../Pivot/Head")
 metadata/_custom_type_script = "uid://b0r4drbbyij12"
@@ -171,10 +168,10 @@ pivot = NodePath("../Pivot")
 head = NodePath("../Pivot/Head")
 metadata/_custom_type_script = "uid://dbwnxhk8d3b8h"
 
-[node name="CameraAnimatorComponent" type="Node" parent="." unique_id=2055535777 node_paths=PackedStringArray("animation_player", "movement_component")]
+[node name="CameraAnimatorComponent" type="Node" parent="." unique_id=2055535777 node_paths=PackedStringArray("animation_player", "movement")]
 script = ExtResource("5_qlg0r")
 animation_player = NodePath("AnimationPlayer")
-movement_component = NodePath("../MovementComponent")
+movement = NodePath("../MovementComponent")
 metadata/_custom_type_script = "uid://touk7e7jqv62"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CameraAnimatorComponent" unique_id=2121875426]
