@@ -3,12 +3,14 @@
 [ext_resource type="Script" uid="uid://7uwto6r6xq6t" path="res://scripts/imput_component.gd" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://cigta500n2xwu" path="res://scripts/player.gd" id="1_g2els"]
 [ext_resource type="Script" uid="uid://b0r4drbbyij12" path="res://scripts/movement_component.gd" id="3_qhqgy"]
-[ext_resource type="Script" uid="uid://dbwnxhk8d3b8h" path="res://scripts/fps_component.gd" id="4_dqkch"]
 [ext_resource type="Script" uid="uid://touk7e7jqv62" path="res://scripts/camera_animator_component.gd" id="5_qlg0r"]
+[ext_resource type="Script" uid="uid://cgqbpmgw3jhmr" path="res://scripts/flashlight_component.gd" id="6_tuyoq"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4flbx"]
 radius = 0.3
 height = 1.7592773
+
+[sub_resource type="BoxMesh" id="BoxMesh_qlg0r"]
 
 [sub_resource type="Animation" id="Animation_smehm"]
 resource_name = "CROUCH"
@@ -151,6 +153,16 @@ physics_interpolation_mode = 2
 [node name="Camera3D" type="Camera3D" parent="Pivot/Head" unique_id=554338431]
 physics_interpolation_mode = 2
 
+[node name="FlashlightPivot" type="Node3D" parent="Pivot" unique_id=359365856]
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Pivot/FlashlightPivot" unique_id=655667623]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pivot/FlashlightPivot" unique_id=1735556746]
+transform = Transform3D(0.135, 0, 0, 0, 0.14, 0, 0, 0, 0.45, -0.33389986, -0.49970996, -0.5061534)
+mesh = SubResource("BoxMesh_qlg0r")
+
+[node name="FlashlightRayCast3D" type="RayCast3D" parent="Pivot" unique_id=917985407]
+
 [node name="InputComponent" type="Node" parent="." unique_id=704337594]
 script = ExtResource("1_3vyb7")
 metadata/_custom_type_script = "uid://7uwto6r6xq6t"
@@ -162,12 +174,6 @@ collision = NodePath("../CollisionShape3D")
 head = NodePath("../Pivot/Head")
 metadata/_custom_type_script = "uid://b0r4drbbyij12"
 
-[node name="FPSComponent" type="Node" parent="." unique_id=1100048396 node_paths=PackedStringArray("pivot", "head")]
-script = ExtResource("4_dqkch")
-pivot = NodePath("../Pivot")
-head = NodePath("../Pivot/Head")
-metadata/_custom_type_script = "uid://dbwnxhk8d3b8h"
-
 [node name="CameraAnimatorComponent" type="Node" parent="." unique_id=2055535777 node_paths=PackedStringArray("animation_player", "movement")]
 script = ExtResource("5_qlg0r")
 animation_player = NodePath("AnimationPlayer")
@@ -177,3 +183,11 @@ metadata/_custom_type_script = "uid://touk7e7jqv62"
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CameraAnimatorComponent" unique_id=2121875426]
 libraries/ = SubResource("AnimationLibrary_fjrip")
 playback_default_blend_time = 2.0
+
+[node name="FlashlightComponent" type="Node" parent="." unique_id=597141522 node_paths=PackedStringArray("flashlight_pivot", "flashlight_light", "head", "pivot")]
+script = ExtResource("6_tuyoq")
+flashlight_pivot = NodePath("../Pivot/FlashlightPivot")
+flashlight_light = NodePath("../Pivot/FlashlightPivot/SpotLight3D")
+head = NodePath("../Pivot/Head")
+pivot = NodePath("../Pivot")
+metadata/_custom_type_script = "uid://cgqbpmgw3jhmr"

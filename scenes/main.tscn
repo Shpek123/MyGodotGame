@@ -14,6 +14,7 @@ sky_material = SubResource("PanoramaSkyMaterial_0wfyh")
 
 [sub_resource type="Environment" id="Environment_1bvp3"]
 background_mode = 2
+background_energy_multiplier = 0.14
 sky = SubResource("Sky_h2yge")
 tonemap_white = 3.42
 fog_enabled = true
@@ -33,7 +34,7 @@ environment = SubResource("Environment_1bvp3")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1961437317]
 transform = Transform3D(0.823327, 0.5485055, -0.14585736, -0.07462418, 0.359372, 0.930206, 0.5626401, -0.75497913, 0.3368124, 0, 5.2280884, 0)
-light_energy = 0.226
+light_energy = 0.0
 shadow_enabled = true
 
 [node name="Player" parent="." unique_id=1689810823 instance=ExtResource("2_sugp2")]
